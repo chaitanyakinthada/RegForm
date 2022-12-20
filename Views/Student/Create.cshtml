@@ -1,0 +1,152 @@
+﻿@model WebApplication1.Models.ViewModels.StudentVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div align="center">
+    <form method="post" enctype="multipart/form-data" onsubmit="return Validation2()">
+        <div class="border p-3 col-md-6 col-md-offset-3 text-left">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <h2 class="text-white-50 pl-3 text-center">Registration</h2>
+            </div>
+
+            @*<div class="form-group">
+                    <label asp-for="Expense.Id" class="control-label"></label>
+                    <input asp-for="Expense.Id" class="form-control" />
+                    <span asp-validation-for="Expense.Id" class="text-danger"></span>
+                </div>*@
+
+            <div class="form-group">
+                <label asp-for="Student.Name" class="control-label"></label>
+                <input asp-for="Student.Name" id="Name" class="form-control" />
+                <span asp-validation-for="Student.Name" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.Age" class="control-label"></label>
+                <input asp-for="Student.Age" id="Age" class="form-control" />
+                <span asp-validation-for="Student.Age" class="text-danger"></span>
+                <span id="Age"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.Email" class="control-label"></label>
+                <input asp-for="Student.Email" id="Email" class="form-control" />
+                <span asp-validation-for="Student.Email" class="text-danger"></span>
+                <span class="text-danger" id="Email1"></span>
+            </div>
+
+            <div class="form-group">
+
+
+
+                <label asp-for="Student.Gender" id="Course" class="control-label"></label>
+
+                @Html.RadioButtonFor(model => model.Student.Gender, "Male")Male
+                @Html.RadioButtonFor(model => model.Student.Gender, "Female")Female
+
+
+                <span asp-validation-for="Student.Gender" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Courses" class="control-label"></label>
+                @*@for(int i=0; i < Model.AvailableCourses.Count; i++)
+                    {
+                        <input asp-for="AvailableCourses[i].Value" type="hidden" class="form-control"/>
+                        <input asp-for="AvailableCourses[i].Selected" class="form-control"/>@Model.AvailableCourses[i].Text
+                    }*@
+
+                @*@foreach(var g in Model.Courses)
+                    {
+                        <input asp-for="Courses" type="hidden" class="form-control"/>
+                        <input asp-for="Courses" class="form-control"/>
+                    }*@
+                <div>
+                    @for (int i = 0; i < Model.Courses.Count; i++)
+                    {
+                        <div>
+                            @Html.CheckBoxFor(x => Model.Courses[i].IsChecked)
+                            @Model.Courses[i].Name
+                            @Html.HiddenFor(x => Model.Courses[i].Id)
+                            @Html.HiddenFor(x => Model.Courses[i].Name)
+                        </div>
+                    }
+
+                </div>
+                @*<span asp-validation-for="Courses" class="text-danger"></span>*@
+
+
+
+
+            </div>
+            <div class="text-danger">
+                @ViewBag.Course
+                @*<h2>@ViewData["Course"]</h2>*@
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Student.CountryId">Country</label>
+                <select asp-for="Student.CountryId" asp-items="@Model.TypeDropDown" class="form-control">
+                    <option selected>---Select Expense Type---</option>
+                </select>
+                <span asp-validation-for="Student.CountryId" class="text-danger"></span>
+            </div>
+            <span class="text-danger">@TempData["CountryId"]</span>
+
+            <div class="form-group">
+                <label asp-for="Student.ProfilePic" class="control-label"></label>
+
+                <input type="file" class="form-control" id="fileobj" name="fileobj" />
+                @*<span asp-validation-for="Student.ProfilePic" class="text-danger"></span>*@
+                <div class="text-danger">
+                    @ViewData["ImageSize"]
+                </div>
+            </div>
+
+            @*<h4>@ViewBag.Success</h4>*@
+            <h4>@TempData["Success"]</h4>
+            @*@if(TempData["Success"] != null)
+                   {
+                   <script type="text/javascript">
+                       window.onload = function () {
+                           alert(@TempData["Success"])
+                       };
+                   </script>
+                }*@
+
+
+            <div id="Demo"></div>
+            <div class="form-group row" align="center">
+                <div class="col-8 offset-2">
+                    <div class="col p-1">
+                        <input type="submit" class="btn btn-primary w-75" value="Create" onclick="return Validation1()" />
+                    </div>
+                    @*<br/>*@
+                    <div class="col p-1">
+                        <a class="btn btn-danger w-75" asp-controller="Home" asp-action="Index">Back</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </form>
+</div>
+@{ 
+      
+    }
+
+
+
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+
